@@ -13,7 +13,7 @@ class App extends Component {
 
 	componentDidMount() {
 		let data = JSON.stringify({"lastUpdate": 0})
-		fetch('http://localhost:9999/',{'method':'POST','body':data})
+		fetch('http://192.168.0.227:9999/',{'method':'POST','body':data})
 		.then((response)=>{response.json().then((data)=> {
 			//let temp = data
 			//console.log("data= ", data[data.length-1].last_update)
@@ -23,7 +23,7 @@ class App extends Component {
 	componentDidUpdate(prevState) {
 	let data = JSON.stringify({"lastUpdate": 0})
   if(prevState.data!==this.state.data) {
-    fetch('http://localhost:9999',{'method':'POST','body':data})
+    fetch('http://192.168.0.227:9999',{'method':'POST','body':data})
     .then((response)=>{response.json().then((data)=> {
       //let temp = data
        
@@ -35,7 +35,8 @@ class App extends Component {
   }
 }
 
-	chngLabel = (e) => {
+	chngCurrLabel = (e) => {
+		//console.log(e.target)
 		this.setState({currentLabel:e})
 	}
 
@@ -47,7 +48,7 @@ class App extends Component {
   //	console.log("state: ", this.state.lastUpdate)
     return(
           <div>
-          	<Labels/>
+          	<Labels chngCurrLabel={this.chngCurrLabel}/>
           	<Sessions respdata={this.state.data}/>
           	<AddLabelForm/>
           	

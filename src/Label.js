@@ -3,12 +3,15 @@ import { Base64 } from 'js-base64';
 
 
 class Label extends Component {
+
   render() {
+  	const chngCurrLabel = this.props.chngCurrLabel
   	let data = this.props.data
   	let name = data.Name
   	let type = data.Type
   	let color = data.Color
-  	let regexp = Base64.decode(data.RawRegexp)
+  	//console.log(data.RawRegexp)
+  	let regexp = (data.RawRegexp!==''?Base64.decode(data.RawRegexp):'')
   	var style
   	if(color==="#ffffff"||color==="white") {
   	style ={ backgroundColor:color,
@@ -19,11 +22,11 @@ class Label extends Component {
   				   'color':'white'}	
   	}
 
-  	var shortRegexp = regexp.length<18?regexp:regexp.slice(0,18)
+  	var shortRegexp = regexp.length<14?regexp:regexp.slice(0,14)
 
   	return(
-	  	<div className={regexp.length<18?"holder":"holder holder-with-block"}>
-	  		<button style={style} className="label">{name}<br/>{type}<br/>{shortRegexp}</button>
+	  	<div className={regexp.length<14?"holder":"holder holder-with-block"}>
+	  		<button style={style} className="label" onClick={chngCurrLabel}>{name}<br/>{type}<br/>{shortRegexp}</button>
 	  		<div className="hide-block">{regexp}</div>
 	  	</div>
 	)

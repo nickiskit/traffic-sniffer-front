@@ -43,7 +43,7 @@ onSubmit = (e) => {
 addLabel = () => {
   let reg = Base64.encode(this.state.regexp)
   let data = JSON.stringify({"name":this.state.name, "color":this.state.color , "type":this.state.type, "regexp":reg})
-  fetch('http://localhost:9999/addLabel',{'method':'POST', 'body':data})
+  fetch('http://192.168.0.227:9999/addLabel',{'method':'POST', 'body':data})
     .then((response)=>{response.text().then((data)=> {
       //let temp = data
       console.log(data)})})

@@ -40,14 +40,27 @@ class Session extends Component {
   render() {
 
   	let data = this.props.data
-  	let port = data.session.clientport
+  	let port = data.session.serverport
     let addr = data.session.clientaddr
+    
+    let labelName
+    let style
+    if(data.session.labels!==null)
+    { 
+      labelName = data.session.labels[0].name
+      style = {backgroundColor:data.session.labels[0].color}
+    }
+
+    else {
+    labelName = ''
+    style =  {backgroundColor:"white"}
+  }
   	let info = <div>{this.createSessionList(data)}</div>
   	if(this.state.isOpen) {
     return(
       <div className="sess-cont">
       
-      <p className="label-logo">label name </p>
+      <p className="label-logo" style={style}>{labelName} </p>
       <div className="sess-info">
       <button className="session-button" onClick={this.click}>Скрыть сессию</button>
       <p className="client-info">Port: {port} <br/> Client addr: {addr}</p>
@@ -59,7 +72,7 @@ class Session extends Component {
     	return(
       <div className="sess-cont">
       
-      <p className="label-logo">label name </p>
+      <p className="label-logo" style={style}>{labelName} </p>
       <div className="sess-info">
       <button className="session-button" onClick={this.click}>Показать сессию</button>
       <p className="client-info">Port: {port} <br/> Client addr: {addr}</p>

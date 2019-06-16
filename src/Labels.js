@@ -11,30 +11,41 @@ state = {
 
 
 componentDidMount() {
-    fetch('http://localhost:9999/getLabels')
+    let temp 
+    let allButton = {'Name':'Show all labels', 'Color':'black', 'Type':'', 'RawRegexp':'' }
+    
+    fetch('http://192.168.0.227:9999/getLabels')
     .then((response)=>{response.json().then((data)=> {
-      //let temp = data
-      this.setState({labels:data.L})})})
+      temp = data.L
+      temp.unshift(allButton)
+      this.setState({labels:temp})})})
   }
 
 componentDidUpdate(prevState) {
+  let temp 
+  let allButton = {'Name':'Show all labels', 'Color':'black', 'Type':'', 'RawRegexp':'' }
   if(prevState.labels!==this.state.labels) {
-    fetch('http://localhost:9999/getLabels')
+    fetch('http://192.168.0.227:9999/getLabels')
     .then((response)=>{response.json().then((data)=> {
       //let temp = data
-      this.setState({labels:data.L})})})
+      temp = data.L
+      temp.unshift(allButton)
+      this.setState({labels:temp})})})
   }
 }
 
-
+  
   render() {
-    console.log("from labels")
+    //console.log("from labels", this.state.labels)
+    const chngCurrLabel = this.props.chngCurrLabel
   	let stateLabels = this.state.labels
+    
+   // stateLabels.unshift(allButton)
     let labels
     if(stateLabels.length) {
-      labels = stateLabels.map((index)=>
-        <div key={index.name} className="labels">
-        <Label data={index}/>
+      labels = stateLabels.map((element, index)=>
+        <div key={index} className="labels" >
+        <Label data={element} chngCurrLabel={chngCurrLabel}/>
         </div>
         )
     }
